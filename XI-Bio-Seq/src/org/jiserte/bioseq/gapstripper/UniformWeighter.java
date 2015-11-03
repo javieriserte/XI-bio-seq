@@ -1,0 +1,31 @@
+package org.jiserte.bioseq.gapstripper;
+
+/**
+ * Assume that the weights of all sequences in a MSA is 1.
+ * 
+ * @author javier iserte
+ *
+ */
+public class UniformWeighter extends SequenceWeighter {
+
+	////////////////////////////////////////////////////////////////////////////
+	// Constructor
+	public UniformWeighter() {
+		super();
+	}
+	////////////////////////////////////////////////////////////////////////////
+	
+	////////////////////////////////////////////////////////////////////////////
+	// Public interface
+	/**
+	 * Gets the weight of a sequence.
+	 */
+	@Override
+	public double getWeight(String sequenceIdentifier) {
+		
+		return 1d;
+		
+	}
+	////////////////////////////////////////////////////////////////////////////
+
+}
