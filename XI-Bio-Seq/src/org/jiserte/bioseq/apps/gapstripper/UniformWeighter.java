@@ -1,4 +1,4 @@
-package org.jiserte.bioseq.gapstripper;
+package org.jiserte.bioseq.apps.gapstripper;
 
 /**
  * Assume that the weights of all sequences in a MSA is 1.

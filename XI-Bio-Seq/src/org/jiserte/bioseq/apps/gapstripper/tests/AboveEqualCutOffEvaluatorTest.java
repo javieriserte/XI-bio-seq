@@ -1,11 +1,10 @@
-package org.jiserte.bioseq.gapstripper.tests;
+package org.jiserte.bioseq.apps.gapstripper.tests;
 
 import static org.junit.Assert.*;
 
+import org.jiserte.bioseq.apps.gapstripper.AboveEqualCutOffEvaluator;
+import org.jiserte.bioseq.apps.gapstripper.CutOffEvaluator;
 import org.junit.Test;
-
-import org.jiserte.bioseq.gapstripper.AboveEqualCutOffEvaluator;
-import org.jiserte.bioseq.gapstripper.CutOffEvaluator;
 
 public class AboveEqualCutOffEvaluatorTest {
 

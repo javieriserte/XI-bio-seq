@@ -1,4 +1,4 @@
-package org.jiserte.bioseq.gapstripper;
+package org.jiserte.bioseq.apps.gapstripper;
 
 /**
  * Abstract class to evaluate cut-off values.

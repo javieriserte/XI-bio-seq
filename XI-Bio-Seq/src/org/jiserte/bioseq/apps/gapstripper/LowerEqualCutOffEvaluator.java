@@ -1,14 +1,15 @@
-package org.jiserte.bioseq.gapstripper;
+package org.jiserte.bioseq.apps.gapstripper;
 
-public class AboveEqualCutOffEvaluator extends CutOffEvaluator {
+public class LowerEqualCutOffEvaluator extends CutOffEvaluator {
+
 
 	////////////////////////////////////////////////////////////////////////////
 	// Constructor
 	/**
-	 * Creates a new AboveEqualCutOffEvaluator with the given value
+	 * Creates a new LowerEqualCutOffEvaluator with the given value
 	 * @param cutoff
 	 */
-	public AboveEqualCutOffEvaluator(double cutoff) {
+	public LowerEqualCutOffEvaluator(double cutoff) {
 		super(cutoff);
 	}
 	////////////////////////////////////////////////////////////////////////////
@@ -19,12 +20,13 @@ public class AboveEqualCutOffEvaluator extends CutOffEvaluator {
 	 * Evaluates the given value against the cut-off value.
 	 * 
 	 * @param value is the value to compare against the cutoff
-	 * @return true if the given value is greater or equal to the cutoff value
+	 * @return true if the given value is lower or equal to the cutoff value
 	 */
 	@Override
 	public boolean passCutoff(double value) {
-		return value>=this.getCutoff();
+		return value<=this.getCutoff();
 	}
 	////////////////////////////////////////////////////////////////////////////
+
 
 }

@@ -1,18 +1,18 @@
-package org.jiserte.bioseq.gapstripper.tests;
+package org.jiserte.bioseq.apps.gapstripper.tests;
 
 import static org.junit.Assert.*;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.jiserte.bioseq.apps.gapstripper.ClusteringWeighter;
+import org.jiserte.bioseq.apps.gapstripper.Gapstripper;
+import org.jiserte.bioseq.apps.gapstripper.LowerEqualCutOffEvaluator;
+import org.jiserte.bioseq.apps.gapstripper.MaximumFrequencyProfiler;
+import org.jiserte.bioseq.apps.gapstripper.UniformWeighter;
 import org.junit.Test;
 
 import pair.Pair;
-import org.jiserte.bioseq.gapstripper.ClusteringWeighter;
-import org.jiserte.bioseq.gapstripper.Gapstripper;
-import org.jiserte.bioseq.gapstripper.LowerEqualCutOffEvaluator;
-import org.jiserte.bioseq.gapstripper.MaximumFrequencyProfiler;
-import org.jiserte.bioseq.gapstripper.UniformWeighter;
 
 public class GapstripperTest extends Gapstripper {
 

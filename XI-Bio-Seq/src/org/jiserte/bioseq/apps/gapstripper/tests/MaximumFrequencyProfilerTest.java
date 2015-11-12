@@ -1,16 +1,15 @@
-package org.jiserte.bioseq.gapstripper.tests;
+package org.jiserte.bioseq.apps.gapstripper.tests;
 
 import static org.junit.Assert.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jiserte.bioseq.apps.gapstripper.AbstractProfiler;
+import org.jiserte.bioseq.apps.gapstripper.ClusteringWeighter;
+import org.jiserte.bioseq.apps.gapstripper.MaximumFrequencyProfiler;
+import org.jiserte.bioseq.apps.gapstripper.UniformWeighter;
 import org.junit.Test;
-
-import org.jiserte.bioseq.gapstripper.AbstractProfiler;
-import org.jiserte.bioseq.gapstripper.ClusteringWeighter;
-import org.jiserte.bioseq.gapstripper.MaximumFrequencyProfiler;
-import org.jiserte.bioseq.gapstripper.UniformWeighter;
 
 public class MaximumFrequencyProfilerTest {
 

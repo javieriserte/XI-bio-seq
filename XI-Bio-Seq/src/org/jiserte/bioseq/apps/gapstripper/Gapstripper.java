@@ -1,4 +1,4 @@
-package org.jiserte.bioseq.gapstripper;
+package org.jiserte.bioseq.apps.gapstripper;
 
 import java.io.BufferedReader;
 import java.io.File;
