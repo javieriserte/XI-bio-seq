@@ -8,6 +8,9 @@ public class ReplicateLinear extends Replicate {
 		return new Replicon(ATG, stop, sequence);
 		
 	}
-
+  @Override
+  public boolean isCircular() {
+    return false;
+  }
 
 }

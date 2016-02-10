@@ -16,7 +16,7 @@ public class ReplicateCircular extends Replicate {
 			
 			nStop = replicateArray(sequence, stop, by);
 			
-			sequence = sequence + sequence;
+			//sequence = sequence + sequence;
 			
 		} else {
 			
@@ -26,13 +26,17 @@ public class ReplicateCircular extends Replicate {
 
 			nStop = replicateArray(sequence, stop, by);
 			
-			sequence = sequence + sequence + sequence + sequence;
+			//sequence = sequence + sequence + sequence + sequence;
 		}
 		
 		return new Replicon(nATGs, nStop, sequence);
 		
 	}
 	
+	@Override
+	public boolean isCircular() {
+	  return true;
+	}
 	/**
 	 * Replicate the elements of and <code>int</code> array a given number of times.
 	 * The replicated elements are put at the end of the array and its value is modified 
@@ -56,7 +60,16 @@ public class ReplicateCircular extends Replicate {
 	protected static int[] replicateArray(String sequence, int[] array, int by) {
 		int[] nArray = new int[by*array.length];
 		for (int i=0 ; i < by*array.length  ; i++) nArray[i]  = array[i % array.length] + sequence.length() * ((int)(i / array.length));
-		return nArray; 
+		return nArray;
+//    int[] nArray = new int[2*by*array.length];
+//    for (int i=0 ; i < by*array.length  ; i++) {
+//      nArray[by*array.length + i]  = array[i % array.length] + sequence.length() * ((int)(i / array.length));
+//    }
+//    for (int i = by*array.length; i<nArray.length; i++  ) {
+//      nArray[i-by*array.length] = nArray[i] - by * sequence.length(); 
+//    }
+//    return nArray; 
 	}
+	
 
 }
