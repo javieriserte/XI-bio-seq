@@ -291,11 +291,23 @@ public class OrfFinder {
 
   protected static int[] extractMatches(String sequence, String[] seqToMatch) {
     List<Integer> result = new ArrayList<Integer>();
+//    String seqPlusTwo = sequence + sequence.substring(0, 2);
     for (int i = 0; i < sequence.length(); i++) {
       for (int j = 0; j < seqToMatch.length; j++) {
-        String seqPlusTwo = sequence + sequence.substring(0, 2);
-        if (seqPlusTwo.startsWith(seqToMatch[j], i))
+
+        boolean found = true;
+        for (int k =0; k<seqToMatch[j].length(); k++  ) {
+          if ( seqToMatch[j].charAt(k) != sequence.charAt( (i+k) % sequence.length() ) ) {
+            found = false;
+            break;
+          }
+        }
+        if (found) {
           result.add(i);
+        }
+//        if (seqPlusTwo.startsWith(seqToMatch[j], i))
+//          result.add(i);
+        
       }
     }
     int[] arrayResult = new int[result.size()];
