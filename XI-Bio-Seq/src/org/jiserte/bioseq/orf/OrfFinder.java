@@ -42,8 +42,6 @@ public class OrfFinder {
    */
   public static void main(String[] args) {
 
-    // Object[] g = OrfFinder.firstORF("AATG", 240);
-
     // STEP ONE:
     // Create a Parser.
     Parser parser = new Parser();
@@ -85,6 +83,13 @@ public class OrfFinder {
       printHelp(out);
 
       System.exit(0);
+    }
+    
+    if (cir.isPresent() && frameOpt.isPresent()) {
+      System.out.println("Circular option is not compatible with frames options.");
+      System.out.println("All frames are scanned with circular option.");
+      System.exit(1);
+
     }
 
     SequenceSource source = getSource(inFastaOpt, in);
