@@ -2,6 +2,7 @@ package org.jiserte.bioseq.orf.analysis;
 
 import java.util.List;
 
+import org.jiserte.bioseq.orf.MarkedOrf;
 import org.jiserte.bioseq.orf.replication.Replicate;
 
 public class LargestOrf extends ExtractSequences {
@@ -13,19 +14,21 @@ public class LargestOrf extends ExtractSequences {
 	}
 
 	@Override
-	protected void attempToKeepLargest(List<String> orfs) {
+	protected void attempToKeepLargest(List<MarkedOrf> orfs) {
 
-		String largestString = "";
+		MarkedOrf largestOrf = new MarkedOrf();
 		
-		int largetsSize =0;
+		int largestOrfSize =0;
 		
-		for (String string : orfs) {
+		for (MarkedOrf currentOrf : orfs) {
 			
-			if (string.length() > largetsSize) {
+			int length = currentOrf.getSequence().length();
+			
+      if (length > largestOrfSize) {
 				
-				largestString = string;
+				largestOrf = currentOrf;
 				
-				largetsSize = string.length(); 
+				largestOrfSize = length; 
 				
 			}
 			
@@ -33,7 +36,7 @@ public class LargestOrf extends ExtractSequences {
 		
 		orfs.clear();
 		
-		orfs.add(largestString);
+		orfs.add(largestOrf);
 		
 	}
 

@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jiserte.bioseq.orf.analysis.ExtractSequences;
+import org.jiserte.bioseq.orf.analysis.ExtractSequencesWithPositions;
 import org.jiserte.bioseq.orf.analysis.LargestOrf;
 import org.jiserte.bioseq.orf.analysis.OrfAnalysis;
 import org.jiserte.bioseq.orf.analysis.ShowMarks;
@@ -58,6 +59,8 @@ public class OrfFinder {
         PrintStreamParameter.getParameter());
     MultipleOption frameOpt = new MultipleOption(parser, 0, "-frame", ',',
         IntegerParameter.getParameter());
+    
+    NoOption extractPosOpt = new NoOption(parser, "-extractPos"); 
     NoOption largestOpt = new NoOption(parser, "-largest");
     NoOption marksOpt = new NoOption(parser, "-marks");
     NoOption inFastaOpt = new NoOption(parser, "-fasta");
@@ -97,7 +100,7 @@ public class OrfFinder {
     Replicate replicate = getReplicate(cir);
 
     OrfAnalysis analysis = getAnalysis(minsize, frameOpt, largestOpt, marksOpt,
-        positOpt, replicate);
+        positOpt, extractPosOpt,  replicate);
 
     for (Pair<String, String> pair : source.getSequences()) {
 
@@ -113,7 +116,7 @@ public class OrfFinder {
 
   private static OrfAnalysis getAnalysis(SingleOption minsize,
       MultipleOption frameOpt, NoOption largestOpt, NoOption marksOpt,
-      NoOption positOpt, Replicate replicate) {
+      NoOption positOpt, NoOption extractPosOpt, Replicate replicate) {
     OrfAnalysis a = null;
 
     Integer[] frames = getFrames(frameOpt);
@@ -124,6 +127,8 @@ public class OrfFinder {
       a = new LargestOrf(replicate, (Integer) minsize.getValue(), frames);
     else if (positOpt.isPresent())
       a = new ShowPositions(replicate, (Integer) minsize.getValue(), frames);
+    else if (extractPosOpt.isPresent())
+      a = new ExtractSequencesWithPositions(replicate, (Integer) minsize.getValue(), frames);
     else
       a = new ExtractSequences(replicate, (Integer) minsize.getValue(), frames);
     return a;
@@ -203,6 +208,8 @@ public class OrfFinder {
     out.println("               :   If frame is 0, then all frames are analyzed.");
     out.println("   -fasta      : the input is a fasta file.");
     out.println("   -marks      : show the ATG and STOP positions for each orf found and each frame.");
+    out.println("   -positions  : show the ATG and STOP positions for each orf found and each frame.");
+    out.println("   -extractPos : extract orf sequences and send them to a fasta with their positions.");
     out.println("   -help       : Show this information.");
   }
 
@@ -242,7 +249,7 @@ public class OrfFinder {
    * 
    * @return a list of String that contain all the ORFs in the sequence
    */
-  public static List<String> allOrfsInThisStrand(String sequence, int minSize,
+  public static List<MarkedOrf> allOrfsInThisStrand(String sequence, int minSize,
       Replicate replicator, Integer[] frames) {
 
     OrfComposer composer = getOrfComposer(sequence, replicator, frames);
@@ -344,14 +351,15 @@ public class OrfFinder {
    * @param result
    *          is the array in which the results will be stored.
    */
-  protected static List<String> retriveORFs(String sequence, int unitLength,
+  protected static List<MarkedOrf> retriveORFs(String sequence, int unitLength,
       OrfMarks marks, int minSize) {
 
     List<Integer>[] ATGsAndSTOPsByFrame = marks.getATGsAndSTOPsByFrame();
-
+    
     List<Boolean>[] ATGorStop = marks.getATGorStop();
 
-    List<String> result = new ArrayList<String>();
+//    List<String> result = new ArrayList<String>();
+    List<MarkedOrf> result = new ArrayList<>();
 
     for (int cframe = 0; cframe < 3; cframe++) {
 
@@ -377,20 +385,24 @@ public class OrfFinder {
             // If the index of the last position in the sequence is greater than
             // the sequence itself, then it must go around the sequence from
             // the
-            // beginning. This only counld happen when the circular option is
+            // beginning. This only could happen when the circular option is
             // used
             StringBuilder orfSequenceBuilder = new StringBuilder();
 
+            MarkedOrf orf = new MarkedOrf();
             while (endIndex + 3 > 0) {
               int from = Math.max(0, atgpos);
               int to = Math.min(endIndex + 3, sequence.length());
               orfSequenceBuilder.append(sequence.substring(from, to));
+              orf = new MarkedOrf(from, to, orfSequenceBuilder.toString());
               atgpos -= sequence.length();
               endIndex -= sequence.length();
             }
             // /////////////////////////////////////////////////////////////////
 
-            result.add(orfSequenceBuilder.toString());
+           
+//            result.add(orfSequenceBuilder.toString());
+            result.add(orf);
 
           }
 

@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jiserte.bioseq.orf.MarkedOrf;
 import org.jiserte.bioseq.orf.OrfFinder;
 import org.jiserte.bioseq.orf.replication.Replicate;
 
@@ -24,7 +25,7 @@ public class ExtractSequences extends OrfAnalysis {
     List<Pair<List<Integer>, String>> order = getFrameIterateOrder(this.frames,
         sequence.getSecond());
 
-    List<String> result = new ArrayList<String>();
+    List<MarkedOrf> result = new ArrayList<>();
 
     for (Pair<List<Integer>, String> pair : order) {
 
@@ -42,7 +43,7 @@ public class ExtractSequences extends OrfAnalysis {
   }
 
   protected void printoutSequences(PrintStream out,
-      Pair<String, String> sequence, List<String> r) {
+      Pair<String, String> sequence, List<MarkedOrf> r) {
     int counter = 0;
 
     int w = (int) (Math.log10(r.size()) + 1);
@@ -52,16 +53,23 @@ public class ExtractSequences extends OrfAnalysis {
     if (!baseDescription.trim().equals(""))
       baseDescription = baseDescription + "|";
 
-    for (String string : r) {
+    for (MarkedOrf orf : r) {
       counter++;
       out.print(">" + baseDescription + "ORF:");
-      out.format("%0" + w + "d%n", counter);
-      out.println(string);
+      out.format("%0" + w + "d", counter);
+      out.println("|["+orf.getAtg()+"-"+orf.getStop()+"]");
+      out.println(orf.getSequence());
     }
   }
   
+  protected String getDescriptionString(String baseDescription, int width, int orderNumber, MarkedOrf orf) {
+    StringBuilder desc = new StringBuilder();
+    desc.append(">" + baseDescription + "ORF:");
+    desc.append( String.format("%0" + width + "d", orderNumber));
+    return desc.toString();
+  }
   
-  protected void attempToKeepLargest(List<String> orfs) {
+  protected void attempToKeepLargest(List<MarkedOrf> orfs) {
   }
 
 }
